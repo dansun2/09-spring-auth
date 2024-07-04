@@ -33,11 +33,22 @@ public class SecurityConfig {
 
     @Bean
     // 스프링시큐리티 필터 레이어를 내가 조작하겠다. 위에 시큐리티 커스터마이저도 여기 들어감
-    public SecurityFilterChain configure(HttpSecurity http){
+    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth ->{
 
            // 어떤 요청 리소스를 매칭시킬건지=> 밑에 있는 url들이 들어오면 권한을 다 주겠다.
            auth.requestMatchers("/auth/login","user/signup","/auth/fail","/").permitAll();
-        });
+
+           // 뒤에 있는 권한을 가진 사용자만 앞에 있는 경로를 허용한다.
+           auth.requestMatchers("/admin/*").hasAnyAuthority("admin role type으로 변환 예정");
+           auth.requestMatchers("/user/*").hasAnyAuthority("usser role type으로 변환 예정");
+
+           // 이 외에 모든 요청은 신경쓰지 않겠다.
+           auth.anyRequest().authenticated();
+        }).formLogin(login ->{
+            login.loginPage("/auth/login"); // 기본 로그인 리소스는 이 url로 쓰겠다.
+        })
+
+        return http.build();
     }
 }
