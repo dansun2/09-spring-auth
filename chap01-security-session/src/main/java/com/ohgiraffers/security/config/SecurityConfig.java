@@ -1,5 +1,7 @@
 package com.ohgiraffers.security.config;
 
+import com.ohgiraffers.security.config.handler.AuthFailHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,13 +11,21 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration // bean으로 등록
 @EnableWebSecurity // 얘가 시큐리티의 설정을 담고 있는 config야~ 라는 뜻
 public class SecurityConfig {
 
-    // 비밀번호 암호화
+    private final AuthFailHandler failHandler;
 
+    @Autowired
+    public SecurityConfig(AuthFailHandler failHandler) {
+        this.failHandler = failHandler;
+    }
+
+
+    // 비밀번호 암호화
     /*
     * 비밀번호를 인코딩 하기 위한 bean
     * Bcrypt는 비밀번호 해싱에 가장 많이 사용되는 알고리즘 중 하나이다.
@@ -49,9 +59,18 @@ public class SecurityConfig {
             login.loginPage("/auth/login"); // 이 루트에 post 요청을 보내면 기본 로그인 리소스는 이 url로 쓰겠다.
             login.usernameParameter("user"); // 사용자가 로그인을 보냈을때 니가 전달한 키값이 뭐야? (html엘리먼트의 name)
             login.passwordParameter("pass");
-            login.defaultSuccessUrl("/", true) // 로그인 성공하면 어떤 url로 보낼거야? true 는 뭐지
-            login.failureHandler(); // 로그인 실패했을때 어떻게 할거야?
-        })
+            login.defaultSuccessUrl("/", true); // 로그인 성공하면 어떤 url로 보낼거야? true 는 뭐지
+            login.failureHandler(failHandler); // 로그인 실패했을때 failHandler가 동작됨
+        }).logout(logout ->{
+            logout.logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"));
+            logout.deleteCookies("JSESSIONID"); // logout 요청이 들어오면 JSESSIONID를 지우겠다
+            logout.invalidateHttpSession(true); // 세션을 소멸시키겠다. 강제로 만료처리
+            logout.logoutSuccessUrl("/"); // 로그아웃 성공하면 어떤 url로 보낼거야?
+        }).sessionManagement(session ->{ // 우리 서버에서 너 세션 관리를 어떻게 할거야?
+            session.maximumSessions(1); // 이 계정으로 세션을 몇 개 만들수 있는지? 중복로그인 몇개까지?
+            session.invalidSessionUrl("/"); // 세션이 만료되면 어디로 보낼건지 url
+
+        }).csrf(csrf -> csrf.disable()); // 대리자공격??????? 내가 요청을 보낼 때?????? 무슨얘긴지 아예 모르겠음......
 
         return http.build();
     }
