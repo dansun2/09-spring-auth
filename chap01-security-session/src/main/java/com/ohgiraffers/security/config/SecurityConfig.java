@@ -69,7 +69,6 @@ public class SecurityConfig {
         }).sessionManagement(session ->{ // 우리 서버에서 너 세션 관리를 어떻게 할거야?
             session.maximumSessions(1); // 이 계정으로 세션을 몇 개 만들수 있는지? 중복로그인 몇개까지?
             session.invalidSessionUrl("/"); // 세션이 만료되면 어디로 보낼건지 url
-
         }).csrf(csrf -> csrf.disable()); // 대리자공격??????? 내가 요청을 보낼 때?????? 무슨얘긴지 아예 모르겠음......
 
         return http.build();
