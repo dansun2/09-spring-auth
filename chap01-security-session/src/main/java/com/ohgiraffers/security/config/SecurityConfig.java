@@ -46,7 +46,11 @@ public class SecurityConfig {
            // 이 외에 모든 요청은 신경쓰지 않겠다.
            auth.anyRequest().authenticated();
         }).formLogin(login ->{
-            login.loginPage("/auth/login"); // 기본 로그인 리소스는 이 url로 쓰겠다.
+            login.loginPage("/auth/login"); // 이 루트에 post 요청을 보내면 기본 로그인 리소스는 이 url로 쓰겠다.
+            login.usernameParameter("user"); // 사용자가 로그인을 보냈을때 니가 전달한 키값이 뭐야? (html엘리먼트의 name)
+            login.passwordParameter("pass");
+            login.defaultSuccessUrl("/", true) // 로그인 성공하면 어떤 url로 보낼거야? true 는 뭐지
+            login.failureHandler(); // 로그인 실패했을때 어떻게 할거야?
         })
 
         return http.build();
