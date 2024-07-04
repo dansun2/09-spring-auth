@@ -1,9 +1,7 @@
 package com.ohgiraffers.security.user.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.ohgiraffers.security.user.model.dto.UserRole;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tbl_user")
@@ -23,7 +21,8 @@ public class User {
     private String password;
 
     @Column(name = "user_role")
-    private String userRole;
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
 
 
 }
