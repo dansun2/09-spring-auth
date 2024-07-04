@@ -1,4 +1,4 @@
-package com.ohgiraffers.security.user.dto;
+package com.ohgiraffers.security.user.model.dto;
 
 public class SignupDTO {
 

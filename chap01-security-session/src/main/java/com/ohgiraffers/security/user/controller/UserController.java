@@ -1,7 +1,7 @@
 package com.ohgiraffers.security.user.controller;
 
 
-import com.ohgiraffers.security.user.dto.SignupDTO;
+import com.ohgiraffers.security.user.model.dto.SignupDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
