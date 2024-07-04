@@ -1,6 +1,7 @@
 package com.ohgiraffers.security.config;
 
 import com.ohgiraffers.security.config.handler.AuthFailHandler;
+import com.ohgiraffers.security.user.model.dto.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -50,8 +51,8 @@ public class SecurityConfig {
            auth.requestMatchers("/auth/login","user/signup","/auth/fail","/").permitAll();
 
            // 뒤에 있는 권한을 가진 사용자만 앞에 있는 경로를 허용한다.
-           auth.requestMatchers("/admin/*").hasAnyAuthority("admin role type으로 변환 예정");
-           auth.requestMatchers("/user/*").hasAnyAuthority("usser role type으로 변환 예정");
+           auth.requestMatchers("/admin/*").hasAnyAuthority(UserRole.ADMIN.getRole());
+           auth.requestMatchers("/user/*").hasAnyAuthority(UserRole.USER.getRole());
 
            // 이 외에 모든 요청은 신경쓰지 않겠다.
            auth.anyRequest().authenticated();

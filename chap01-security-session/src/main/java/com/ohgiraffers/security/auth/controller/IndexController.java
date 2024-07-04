@@ -14,13 +14,13 @@ public class IndexController {
 
     @GetMapping("/admin/page")
     public ModelAndView admin(ModelAndView mv){
-        mv.setViewName("admin/admin");
+        mv.setViewName("admin/page");
         return mv;
     }
 
     @GetMapping("/user/page")
     public ModelAndView user(ModelAndView mv){
-        mv.setViewName("user/user");
+        mv.setViewName("user/page");
         return mv;
     }
 

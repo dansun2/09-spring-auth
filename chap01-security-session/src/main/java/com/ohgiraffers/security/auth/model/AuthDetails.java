@@ -4,6 +4,7 @@ import com.ohgiraffers.security.user.model.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,18 +29,20 @@ public class AuthDetails implements UserDetails {
 
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+    public Collection<? extends GrantedAuthority> getAuthorities() { // 사용자가 로그인 되었을때 어떤 권한을 갖고있는지 확인해서 처리해줌 (SecurityConfig쪽에서)
+        Collection<GrantedAuthority> authorities = new ArrayList<>(); //GrantedAuthority는 사용자의 권한을 식별하기 위한 객체
+        user.getRoleList().forEach(role -> authorities.add(()->role));
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return "";
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return user.getUserName();
     }
 
 
@@ -48,7 +51,7 @@ public class AuthDetails implements UserDetails {
      * false이면 해당 계정을 사용할 수 없다.
      * */
     @Override
-    public boolean isAccountNonExpired() { //
+    public boolean isAccountNonExpired() {
         return true;
     }
 

@@ -3,6 +3,10 @@ package com.ohgiraffers.security.user.model.entity;
 import com.ohgiraffers.security.user.model.dto.UserRole;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Entity
 @Table(name = "tbl_user")
 public class User {
@@ -24,6 +28,16 @@ public class User {
     @Column(name = "user_role")
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+
+    public List<String> getRoleList(){
+        if(this.userRole.getRole().length() > 0){ // 0보다크면 뭔가 값이 들어있다는 뜻
+
+            // arrays.asList는 리스트 형태로 반환하겠다.
+            // 다중권한처리 (ex.판매자와 관리자가 같은 도메인에 접근할 때)
+            return Arrays.asList(this.userRole.getRole().split(","));
+        }
+        return new ArrayList<>();
+    }
 
     public User() {
     }
