@@ -27,6 +27,21 @@ public class UserController {
 
     @PostMapping("/signup")
     public ModelAndView signup(@ModelAttribute SignupDTO signupDTO, ModelAndView mv){
-        Integer result = userService.regist(signupDTO); // 회원가입요청이 들어오면
+        Integer result = userService.regist(signupDTO); // 회원가입요청이 들어오면 service로직에서 잘 가입이 됐는지 확인함
+        String message = null;
+
+        if(result == null) {
+            message = "중복회원이 존재합니다.";
+        }else if (result == 0) {
+            message = "서버에서 오류가 발생하였습니다.";
+            mv.setViewName("user/signup");
+        }else if (result >= 1) {
+            message = "회원가입이 완료되었습니다.";
+            mv.setViewName("auth/login");
+        }
+
+        mv.addObject("message", message);
+
+        return mv;
     }
 }
