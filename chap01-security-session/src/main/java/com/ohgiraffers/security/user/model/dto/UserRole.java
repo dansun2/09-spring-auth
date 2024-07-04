@@ -2,7 +2,7 @@ package com.ohgiraffers.security.user.model.dto;
 
 public enum UserRole {
 
-    USER("USER");
+    USER("USER"),
     ADMIN("ADMIN");
     private String role;
 
