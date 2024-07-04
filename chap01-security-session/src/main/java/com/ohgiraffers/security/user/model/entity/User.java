@@ -9,6 +9,7 @@ public class User {
 
     @Id
     @Column(name = "user_no")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // autoincrements였나?
     private int userNo;
 
     @Column(name = "user_id")
@@ -24,5 +25,65 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
+    public User() {
+    }
 
+    public User(int userNo, String userId, String userName, String password, UserRole userRole) {
+        this.userNo = userNo;
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.userRole = userRole;
+    }
+
+    public int getUserNo() {
+        return userNo;
+    }
+
+    public void setUserNo(int userNo) {
+        this.userNo = userNo;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userNo=" + userNo +
+                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", userRole=" + userRole +
+                '}';
+    }
 }
