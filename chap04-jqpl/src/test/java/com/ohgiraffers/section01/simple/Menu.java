@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity(name = "")
+@Entity(name = "menu_section01")
 @Table(name = "tbl_menu")
 public class Menu {
 
