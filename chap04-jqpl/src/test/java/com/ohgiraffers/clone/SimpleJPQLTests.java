@@ -26,7 +26,7 @@ public class SimpleJPQLTests {
         entityManager.close();
     }
     @AfterAll
-    public void closeFactory(){
+    public static void closeFactory(){
         entityManagerFactory.close();
     }
 
