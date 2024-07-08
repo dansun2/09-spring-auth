@@ -31,4 +31,14 @@ public class ProjectionTests {
         entityManagerFactory.close();
     }
 
+    /*
+    * 프로젝션(projection)
+    * select 절에 조회할 대상을 지정하는 것을 프로젝션이라고 한다.
+    * (select {프로젝션 대상} from)
+    *
+    * 프로젝션 대상은 4가지 방식이 있다.
+    * 1. 엔티티 프로젝션
+    *   원하는 객체를 바로 조회할 수 있다.
+    *   조회된 엔티티는 영속성 컨텍스트에서 관리한다.
+    * */
 }
