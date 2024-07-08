@@ -28,7 +28,7 @@ public class UserService {
         User user = userRepository.findByuserId(signupDTO.getUserId()); // 기존에 있는 회원인지 조회함
 
         if(!Objects.isNull(user)) { // user가 null이 아니면
-            return null; // 가입못하게 해줄거니까 0 리턴
+            return null; // 가입못하게 해줄거니까 null 리턴
         }
         user = new User(); // 새로 가입할 수 있게 할당해줌
         user.setUserId(signupDTO.getUserId());

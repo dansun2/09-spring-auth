@@ -7,14 +7,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class IndexController {
 
-    @GetMapping("/")
+    @GetMapping("/") // 기본 url
     public String root(){
         return "index";
     }
 
-    @GetMapping("/admin/page")
+    @GetMapping("/admin/page") // 관리자 page
     public ModelAndView admin(ModelAndView mv){
-        mv.setViewName("admin/page");
+        mv.setViewName("admin/page"); // admin폴더에 있는 page html 보여줌
         return mv;
     }
 

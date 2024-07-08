@@ -15,10 +15,10 @@ public class AuthController {
 
     }
 
-    @GetMapping("/fail")
+    @GetMapping("/fail") // 로그인 실패했을때
     public ModelAndView loginFail(@RequestParam String message, ModelAndView mv){
         mv.addObject("message", message);
-        mv.setViewName("/auth/fail");
+        mv.setViewName("/auth/fail"); // templates 폴더/auth/fail 페이지 보여줌
         return mv;
     }
 }

@@ -8,8 +8,11 @@
 <script th:inline="javascript">
     // 오류 메세지를 출력함
     alert([[${message}]]);
+
     // 페이지를 로그인 페이지로 이동시킴
     window.location.replace("/auth/login");
+
+    // fail 페이지로 이동했을때 결국 오류 메세지를 띄워주고 다시 "/auth/login" url로 보냄
 </script>
 </body>
 </html>

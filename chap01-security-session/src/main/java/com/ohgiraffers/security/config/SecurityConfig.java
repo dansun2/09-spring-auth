@@ -38,6 +38,8 @@ public class SecurityConfig {
     }
 
     @Bean
+    // 원래 스태틱에 있는것도 서버에 요청을 보내서 응답을 받는건데 이게 없으면 resources/static 안에 있는 img나 css까지 시큐리티가 다 막아버려서 못부름
+    // 그래서 이걸 써주고 스태틱 폴더 손대지 말라고 하는거.
     public WebSecurityCustomizer webSecurityCustomizer(){ // 이거는 니가 빡세게 관리하지 않아도 돼. 정적리소스는 제거해. 보안처리하지마
         return web -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
