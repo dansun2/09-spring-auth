@@ -4,10 +4,12 @@ package com.ohgiraffers.section03.projection;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import jakarta.persistence.Table;
+import org.junit.jupiter.api.*;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ProjectionTests {
 
@@ -41,4 +43,39 @@ public class ProjectionTests {
     *   원하는 객체를 바로 조회할 수 있다.
     *   조회된 엔티티는 영속성 컨텍스트에서 관리한다.
     * */
+
+
+    // 1. 엔티티 프로젝션
+    @Test
+    public void 단일_엔티티_프로젝션_테스트(){
+        String jpql = "SELECT m FROM menu_section03 m";
+        List<Menu> menuList = entityManager.createQuery(jpql, Menu.class).getResultList();
+        System.out.println(menuList.get(1));
+        assertNotNull(menuList);
+    }
+
+    @Test
+    public void 양방향_연관관계_엔티티_프로젝션_테스트(){
+        int menuCodeParameter = 3;
+        String jpql = "SELECT m.categoryCode FROM bidirection_menu m WHERE m.menuCode = :menuCode";
+        BiDirectionCategory categoryOfMenu = entityManager.createQuery(jpql, BiDirectionCategory.class)
+                .setParameter("menuCode", menuCodeParameter).getSingleResult();
+        assertNotNull(categoryOfMenu);
+        System.out.println(categoryOfMenu);
+        assertNotNull(categoryOfMenu.getMenuList());
+        categoryOfMenu.getMenuList().forEach(System.out::println);
+    }
+
+    @Test
+    public void 임베디드_타입_프로젝션_테스트() {
+
+        //when
+        String jpql = "SELECT m.menuInfo FROM embedded_menu m";
+        List<MenuInfo> menuInfoList = entityManager.createQuery(jpql, MenuInfo.class).getResultList();
+
+        //then
+        Assertions.assertNotNull(menuInfoList);
+        menuInfoList.forEach(System.out::println);
+
+    }
 }

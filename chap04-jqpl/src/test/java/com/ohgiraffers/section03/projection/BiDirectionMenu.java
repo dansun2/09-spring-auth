@@ -2,7 +2,7 @@ package com.ohgiraffers.section03.projection;
 
 import jakarta.persistence.*;
 
-@Entity(name = "")
+@Entity(name = "bidirection_menu")
 @Table(name = "tbl_menu")
 public class BiDirectionMenu {
 
@@ -17,7 +17,7 @@ public class BiDirectionMenu {
     private int menuPrice;
 
     @ManyToOne
-    @Column(name = "category_code")
+    @JoinColumn(name = "category_code")
     private BiDirectionCategory categoryCode;
 
     @Column(name = "orderable_status")

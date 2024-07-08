@@ -18,7 +18,7 @@ public class BiDirectionCategory {
     @Column(name = "ref_category_code")
     private Integer refCategoryCode;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "categoryCode") // mappedby는 연관관계의 주인
     private List<BiDirectionMenu> menuList;
 
     public BiDirectionCategory() {
@@ -69,7 +69,6 @@ public class BiDirectionCategory {
                 "categoryCode=" + categoryCode +
                 ", categoryName='" + categoryName + '\'' +
                 ", refCategoryCode=" + refCategoryCode +
-                ", menuList=" + menuList +
                 '}';
     }
 }
