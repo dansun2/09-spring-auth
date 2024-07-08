@@ -4,7 +4,9 @@ package com.ohgiraffers.section01.simple;
 import jakarta.persistence.*;
 import org.junit.jupiter.api.*;
 
-import java.util.Objects;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SimpleJPQLTests {
     /*
@@ -55,20 +57,62 @@ public class SimpleJPQLTests {
     @Test
     public void TypedQuery_를_이용한_단일메뉴_조회_테스트(){
         String jpql = "SELECT m.menuName FROM menu_section01 as m WHERE m.menuCode=3";
-        TypedQuery<String> query = entityManager.createQuery(jpql, String.class);
+        TypedQuery<String> query = entityManager.createQuery(jpql, String.class); // 이런타입으로 반환이 될거야~하고 픽스(String)
 
         String resultMenuName = query.getSingleResult();
 
-        Assertions.assertEquals("민트미역국", resultMenuName);
+        assertEquals("민트미역국", resultMenuName);
     }
 
     @Test
     public void Query_를_이용한_단일메뉴_조회_테스트(){
-        String jpql = "SELECT m.menuName FROM menu_section01 as m WHERE m.menuCode=7";
+        String jpql =  "SELECT m.menuName FROM menu_section01 as m WHERE m.menuCode=7";
 
         Query query = entityManager.createQuery(jpql);
         Object resultMenuName = query.getSingleResult();
-        Assertions.assertTrue(resultMenuName instanceof String);
-        Assertions.assertEquals("민트미역국", resultMenuName);
+        Assertions.assertTrue(resultMenuName instanceof String); // 여기 넘겨진 데이터의 결과가 트루냐 펄스냐 (근데 오브젝트의 타입을 물어보는거)
+        System.out.println(resultMenuName);
+        assertEquals("민트미역국", resultMenuName);
+    }
+
+    @Test
+    public void TypedQuery를_이용한_단일행_조회_테스트() {
+
+        //when
+        String jpql = "SELECT m FROM menu_section01 as m WHERE m.menuCode = 7";
+        TypedQuery<Menu> query = entityManager.createQuery(jpql, Menu.class);   //반환 타입을 row와 매핑할 엔티티 타입으로 설정
+        
+        // jpq는 조회를 할 때 자동으로 자기가 테이블의 별칭을 준다 println 해보면 m1_0 이렇게 별칭을 줬음
+        Menu findMenu = entityManager.find(Menu.class, 7);
+        System.out.println(findMenu);
+
+        Menu foundMenu = query.getSingleResult();
+
+        //then
+        Assertions.assertEquals(7, foundMenu.getMenuCode());
+        System.out.println(foundMenu);
+    }
+
+    @Test
+    public void TypedQuery를_이용한_다중행_조회_테스트() {
+
+        //when
+        String jpql = "SELECT m FROM menu_section01 as m";
+        TypedQuery<Menu> query = entityManager.createQuery(jpql, Menu.class);   //반환 타입을 row와 매핑할 엔티티 타입으로 설정
+
+        List<Menu> foundMenuList = query.getResultList();
+
+        //then
+        assertNotNull(foundMenuList);
+
+        foundMenuList.forEach(System.out::println);
+// 윗줄은 밑에꺼랑 같은거다 List는 forEach로 쓸 수 있음
+//        for (Menu m: foundMenuList) {
+//            System.out.println(m);
+//        }
+
+// 위에 for 문을 더 간단하게 쓰면
+//        foundMenuList.forEach(m -> System.out.println(m));
+
     }
 }
