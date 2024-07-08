@@ -1,6 +1,7 @@
 package com.ohgiraffers.section03.projection;
 
-import jakarta.persistence.Embedded;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 
 /*
 * 임베디드 타입(Embedded type, 복합 값 타입 또는 내장 타입)
@@ -8,6 +9,44 @@ import jakarta.persistence.Embedded;
 * 엔티티의 필드 중 일부분을 하나의 임베디드 타입으로 정의하면 알아보기 쉽고 재사용성이 높게 디자인 할 수 있어 유지보수에 용이하다.
 * */
 
-@Embedded
+@Embeddable
 public class MenuInfo {
+    @Column(name = "menu_name")
+    private String menuName;
+
+    @Column(name = "menu_price")
+    private int menuPrice;
+
+    public MenuInfo() {
+    }
+
+    public MenuInfo(String menuName, int menuPrice) {
+        this.menuName = menuName;
+        this.menuPrice = menuPrice;
+    }
+
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
+
+    public int getMenuPrice() {
+        return menuPrice;
+    }
+
+    public void setMenuPrice(int menuPrice) {
+        this.menuPrice = menuPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "MenuInfo{" +
+                "menuName='" + menuName + '\'' +
+                ", menuPrice=" + menuPrice +
+                '}';
+    }
 }
+

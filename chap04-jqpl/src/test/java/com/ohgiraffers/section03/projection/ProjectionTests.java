@@ -66,6 +66,7 @@ public class ProjectionTests {
         categoryOfMenu.getMenuList().forEach(System.out::println);
     }
 
+    // 2. 임베디드 프로젝션
     @Test
     public void 임베디드_타입_프로젝션_테스트() {
 
