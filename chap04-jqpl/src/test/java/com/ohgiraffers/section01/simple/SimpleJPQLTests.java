@@ -37,4 +37,12 @@ public class SimpleJPQLTests {
         entityManagerFactory.close();
     }
 
+    /*
+    * jpql의 기본 문법
+    * select, update, delete 등의 키워드 사용은 sql과 동일하다.
+    * insert는 persist() 메소드를 사용하면 된다.
+    * 키워드는 대소문자를 구분하지 않지만, 엔티티와 속성은 대소문자를 구분함에 유의한다.
+    * 엔티티 별칭은 필수로 작성해야 하며 별칭 없이 작성하면 에러가 발생한다.
+    * */
+
 }
