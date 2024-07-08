@@ -10,12 +10,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 public class SimpleJPQLTests {
+
     private static EntityManagerFactory entityManagerFactory;
     private EntityManager entityManager;
 
     @BeforeAll
     public static void initFactory(){
-        entityManagerFactory = Persistence.createEntityManagerFactory("jpatest"); //데이터베이스에 커넥션 맺을 수 있는 공장을 만듬
+        entityManagerFactory = Persistence.createEntityManagerFactory("jpatest"); //데이터베이스에 커넥션 맺을 수 있는 공장을 만듦
     }
     @BeforeEach
     public void initManager(){
