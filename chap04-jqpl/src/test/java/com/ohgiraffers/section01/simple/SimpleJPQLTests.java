@@ -115,4 +115,43 @@ public class SimpleJPQLTests {
 //        foundMenuList.forEach(m -> System.out.println(m));
 
     }
+    @Test
+    public void distinct를_활용한_중복제거_여러_행_조회_테스트() {
+
+        //when
+        String jpql = "SELECT DISTINCT m.categoryCode FROM menu_section01 m";
+        TypedQuery<Integer> query = entityManager.createQuery(jpql, Integer.class);
+        List<Integer> categoryCodeList = query.getResultList();
+
+        //then
+        assertNotNull(categoryCodeList);
+        categoryCodeList.forEach(System.out::println);
+    }
+    @Test
+    public void in_연산자를_활용한_조회_테스트() {
+        /* categoryCode가 6, 10 인 메뉴 목록 조회 출력 */
+
+        //when
+        String jpql = "SELECT m FROM menu_section01 m WHERE m.categoryCode IN (6, 10)";
+        List<Menu> menuList = entityManager.createQuery(jpql, Menu.class).getResultList();
+
+        //then
+        assertNotNull(menuList);
+        menuList.forEach(System.out::println);
+    }
+
+    @Test
+    public void like_연산자를_활용한_조회_테스트() {
+        /* 마늘이 들어가는 메뉴명을 가진 메뉴 목록 조회 출력 */
+
+        //when
+        String jpql = "SELECT m FROM menu_section01 m WHERE m.menuName LIKE '%마늘%'";
+        List<Menu> menuList = entityManager.createQuery(jpql, Menu.class).getResultList();
+
+        //then
+        assertNotNull(menuList);
+        menuList.forEach(System.out::println);
+    }
+
+
 }
