@@ -2,34 +2,29 @@ package com.ohgiraffers.section03.projection;
 
 import jakarta.persistence.*;
 
-@Entity(name = "")
+@Entity(name = "embedded_menu")
 @Table(name = "tbl_menu")
-public class BiDirectionMenu {
+public class EmbeddedMenu {
 
     @Id
     @Column(name = "menu_code")
     private int menuCode;
 
-    @Column(name = "menu_name")
-    private String menuName;
+    @Embedded
+    private MenuInfo menuInfo;
 
-    @Column(name = "menu_price")
-    private int menuPrice;
-
-    @ManyToOne
     @Column(name = "category_code")
-    private BiDirectionCategory categoryCode;
+    private int categoryCode;
 
     @Column(name = "orderable_status")
     private String orderableStatus;
 
-    public BiDirectionMenu() {
+    public EmbeddedMenu() {
     }
 
-    public BiDirectionMenu(int menuCode, String menuName, int menuPrice, BiDirectionCategory categoryCode, String orderableStatus) {
+    public EmbeddedMenu(int menuCode, MenuInfo menuInfo, int categoryCode, String orderableStatus) {
         this.menuCode = menuCode;
-        this.menuName = menuName;
-        this.menuPrice = menuPrice;
+        this.menuInfo = menuInfo;
         this.categoryCode = categoryCode;
         this.orderableStatus = orderableStatus;
     }
@@ -42,27 +37,19 @@ public class BiDirectionMenu {
         this.menuCode = menuCode;
     }
 
-    public String getMenuName() {
-        return menuName;
+    public MenuInfo getMenuInfo() {
+        return menuInfo;
     }
 
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
+    public void setMenuInfo(MenuInfo menuInfo) {
+        this.menuInfo = menuInfo;
     }
 
-    public int getMenuPrice() {
-        return menuPrice;
-    }
-
-    public void setMenuPrice(int menuPrice) {
-        this.menuPrice = menuPrice;
-    }
-
-    public BiDirectionCategory getCategoryCode() {
+    public int getCategoryCode() {
         return categoryCode;
     }
 
-    public void setCategoryCode(BiDirectionCategory categoryCode) {
+    public void setCategoryCode(int categoryCode) {
         this.categoryCode = categoryCode;
     }
 
@@ -76,10 +63,9 @@ public class BiDirectionMenu {
 
     @Override
     public String toString() {
-        return "BiDirectionMenu{" +
+        return "EmbeddedMenu{" +
                 "menuCode=" + menuCode +
-                ", menuName='" + menuName + '\'' +
-                ", menuPrice=" + menuPrice +
+                ", menuInfo=" + menuInfo +
                 ", categoryCode=" + categoryCode +
                 ", orderableStatus='" + orderableStatus + '\'' +
                 '}';
