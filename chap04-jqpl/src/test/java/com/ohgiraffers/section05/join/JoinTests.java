@@ -7,6 +7,8 @@ import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 public class JoinTests {
 
@@ -43,5 +45,19 @@ public class JoinTests {
 
         Assertions.assertNotNull(menuList);
         menuList.forEach(System.out::println);
+    }
+
+    @Test
+    public void 외부조인을_이용한_조회_테스트(){
+        String jpql = "SELECT m.menuName, c.categoryName FROM menu_section05 m RIGHT JOIN m.categoryCode c" +
+                " ORDER BY m.categoryCode.categoryCode";
+
+        List<Object[]> menuList = entityManager.createQuery(jpql, Object[].class).getResultList();
+
+        Assertions.assertNotNull(menuList);
+        menuList.forEach(row -> {
+            Stream.of(row).forEach(col -> System.out.println(col + " "));
+            System.out.println();
+        });
     }
 }
