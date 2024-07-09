@@ -5,6 +5,9 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -36,8 +39,6 @@ public class GroupFunctionTests {
     * 1. 그룹함수의 반환 타입은 결과 값이 정수면 Long, 실수면 Double로 반환된다.
     * 2. 값이 없는 상태에서는 count를 제외한 그룹 함수는 null이 되고, count만 0이 된다.
     *   따라서 반환 값을 담기 위해 선언하는 변수 타입을 기본자료형으로 하게 되면, 조회 결과를 언박싱 할 때 npe가 발생한다.
-    * 3. 그룹 함수의 반환 자료형은 Long or Double형이기 떄문에 having절에서 그룹 함수 결과값을 비교하기 위한
-    *   파라미터 타입은 Long or Double로 해야한다.
     * */
 
     @Test
@@ -76,7 +77,38 @@ public class GroupFunctionTests {
                     .setParameter("categoryCode", categoryCodeParameter)
                     .getSingleResult();
         });
+    }
 
+    @Test
+    public void groupby절과_having절을_사용한_조회_테스트() {
 
+        //given
+        int minPrice = 50000;
+        long minPriceLong = 50000L;
+
+        //when
+        String jpql = "SELECT m.categoryCode, SUM(m.menuPrice)"
+                + " FROM menu_section04 m"
+                + " GROUP BY m.categoryCode"
+                + " HAVING SUM(m.menuPrice) >= :minPrice";
+
+        List<Object[]> sumPriceOfCategoryList = entityManager.createQuery(jpql, Object[].class)
+                .setParameter("minPrice", minPrice)
+                .getResultList();
+
+        List<Object[]> sumPriceOfCategoryListToLong = entityManager.createQuery(jpql, Object[].class)
+                .setParameter("minPrice", minPriceLong)
+                .getResultList();
+
+        //then
+        Assertions.assertNotNull(sumPriceOfCategoryList);
+        sumPriceOfCategoryList.forEach(row -> {
+            Arrays.stream(row).forEach(System.out::println);
+        });
+
+        Assertions.assertNotNull(sumPriceOfCategoryList);
+        sumPriceOfCategoryListToLong.forEach(row -> {
+            Arrays.stream(row).forEach(System.out::println);
+        });
     }
 }
