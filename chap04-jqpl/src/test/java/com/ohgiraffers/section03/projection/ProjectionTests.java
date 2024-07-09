@@ -102,6 +102,7 @@ public class ProjectionTests {
         categoryNameList.forEach(System.out::println);
     }
 
+    // 4. new 명령어를 활용한 프로젝션
     @Test
     public void new_명령어를_활용한_프로젝션_테스트(){
         String jpql = "SELECT" +
