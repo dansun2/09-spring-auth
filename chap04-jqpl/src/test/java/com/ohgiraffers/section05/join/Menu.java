@@ -1,11 +1,8 @@
 package com.ohgiraffers.section05.join;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
-@Entity(name = "")
+@Entity(name = "menu_section05")
 @Table(name = "tbl_menu")
 public class Menu {
 
@@ -19,8 +16,9 @@ public class Menu {
     @Column(name = "menu_price")
     private int menuPrice;
 
-    @Column(name = "category_code")
-    private int categoryCode;
+    @ManyToOne
+    @JoinColumn(name = "category_code")
+    private Category categoryCode;
 
     @Column(name = "orderable_status")
     private String orderableStatus;
@@ -28,7 +26,7 @@ public class Menu {
     public Menu() {
     }
 
-    public Menu(int menuCode, String menuName, int menuPrice, int categoryCode, String orderableStatus) {
+    public Menu(int menuCode, String menuName, int menuPrice, Category categoryCode, String orderableStatus) {
         this.menuCode = menuCode;
         this.menuName = menuName;
         this.menuPrice = menuPrice;
@@ -60,11 +58,11 @@ public class Menu {
         this.menuPrice = menuPrice;
     }
 
-    public int getCategoryCode() {
+    public Category getCategoryCode() {
         return categoryCode;
     }
 
-    public void setCategoryCode(int categoryCode) {
+    public void setCategoryCode(Category categoryCode) {
         this.categoryCode = categoryCode;
     }
 
