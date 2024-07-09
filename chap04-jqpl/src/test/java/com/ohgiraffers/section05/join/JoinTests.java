@@ -39,6 +39,7 @@ public class JoinTests {
 
     @Test
     public void 내부조인을_이용한_조회_테스트(){
+        // 연관관계가 맺어진 inner 조인을 의미함
         String jpql = "SELECT m FROM menu_section05 m JOIN m.categoryCode c";
 
         List<Menu> menuList = entityManager.createQuery(jpql, Menu.class).getResultList();
@@ -49,6 +50,7 @@ public class JoinTests {
 
     @Test
     public void 외부조인을_이용한_조회_테스트(){
+        // 연관관계가 맺어진 엔티티들에 대한 Left or Right Outer 조인을 말한다.
         String jpql = "SELECT m.menuName, c.categoryName FROM menu_section05 m RIGHT JOIN m.categoryCode c" +
                 " ORDER BY m.categoryCode.categoryCode";
 
