@@ -57,9 +57,22 @@ public class JoinTests {
         List<Object[]> menuList = entityManager.createQuery(jpql, Object[].class).getResultList();
 
         Assertions.assertNotNull(menuList);
+
+
         menuList.forEach(row -> {
             Stream.of(row).forEach(col -> System.out.println(col + " "));
             System.out.println();
         });
+        // 위에 문단 풀어서 쓰면
+        for (Object[] objs: menuList){
+            for (Object obj: objs){
+                System.out.println(obj);
+                System.out.println();
+            }
+            System.out.println();
+        }
     }
+
+    @Test
+
 }
