@@ -74,5 +74,26 @@ public class JoinTests {
     }
 
     @Test
+    public void 세타조인을_이용한_조회_테스트(){
+        // 세타 조인은 조인 되는 모든 경우의 수를 다 반환하는 크로스 조인과 같다.
+        // 엔티티들에 대한 조인을 말함
+        String jpql = "SELECT c.categoryName, m.menuName FROM category_section05 c, menu_section05 m";
 
+        List<Object[]> categoryList = entityManager.createQuery(jpql, Object[].class).getResultList();
+
+        Assertions.assertNotNull(categoryList);
+
+        categoryList.forEach(row -> {
+            Stream.of(row).forEach(col -> System.out.println(col + " "));
+            System.out.println();
+        });
+
+        for (Object[] objs: categoryList){
+            for (Object obj: objs){
+                System.out.println(obj);
+                System.out.println();
+            }
+            System.out.println();
+        }
+    }
 }
