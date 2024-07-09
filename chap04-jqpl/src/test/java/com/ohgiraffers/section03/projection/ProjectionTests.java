@@ -94,12 +94,22 @@ public class ProjectionTests {
     // 3. 스칼라 타입 프로젝션
     @Test
     public void TypedQuery를_이용한_스칼라_타입_프로젝션_테스트(){
-        String jpql = "SELECT m.categoryName FROM category_section03";
+        String jpql = "SELECT c.categoryName FROM category_section03 c";
 
         List<String> categoryNameList = entityManager.createQuery(jpql, String.class).getResultList();
 
         Assertions.assertNotNull(categoryNameList);
         categoryNameList.forEach(System.out::println);
+    }
+
+    @Test
+    public void new_명령어를_활용한_프로젝션_테스트(){
+        String jpql = "SELECT" +
+                " new com.ohgiraffers.section03.projection.CategoryInfo(c.categoryCode, c.categoryName)" +
+                        "       FROM category_section03 c";
+        List<CategoryInfo> categoryInfoList = entityManager.createQuery(jpql, CategoryInfo.class).getResultList();
+        Assertions.assertNotNull(categoryInfoList);
+        categoryInfoList.forEach(System.out::println);
     }
 
 }
