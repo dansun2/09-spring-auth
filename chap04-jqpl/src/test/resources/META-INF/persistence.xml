@@ -11,6 +11,9 @@
         <class>com.ohgiraffers.section04.groupfunction.Menu</class>
         <class>com.ohgiraffers.section05.join.Menu</class>
         <class>com.ohgiraffers.section05.join.Category</class>
+        <class>com.ohgiraffers.section06.subquery.Menu</class>
+        <class>com.ohgiraffers.section06.subquery.Category</class>
+        <class>com.ohgiraffers.section07.namedquery.Menu</class>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.user" value="gangnam"/>

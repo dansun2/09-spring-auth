@@ -1,4 +1,4 @@
-package com.ohgiraffers.section06.subquery;
+package com.ohgiraffers.section07.namedquery;
 
 
 import jakarta.persistence.EntityManager;
@@ -8,9 +8,7 @@ import org.junit.jupiter.api.*;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-public class SubQueryTests {
+public class NamedQueryTests {
 
     private static EntityManagerFactory entityManagerFactory;
     private EntityManager entityManager;
@@ -31,21 +29,10 @@ public class SubQueryTests {
     }
 
     @Test
-    public void 서브쿼리를_이용한_메뉴_조회_테스트() {
+    public void 네임드쿼리를_이용한_조회_테스트(){
+        List<Menu> menuList = entityManager.createNamedQuery("menu_section07.selectMenuList", Menu.class).getResultList();
 
-        //given
-        String categoryNameParameter = "한식";
-
-        //when
-        String jpql = "SELECT m FROM menu_section06 m WHERE m.categoryCode "
-                + "= (SELECT c.categoryCode FROM category_section06 c WHERE c.categoryName = :categoryName)";
-        List<Menu> menuList = entityManager.createQuery(jpql, Menu.class)
-                .setParameter("categoryName", categoryNameParameter)
-                .getResultList();
-
-        //then
         Assertions.assertNotNull(menuList);
         menuList.forEach(System.out::println);
-
     }
 }
