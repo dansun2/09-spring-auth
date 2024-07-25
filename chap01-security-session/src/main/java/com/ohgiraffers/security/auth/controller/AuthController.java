@@ -12,7 +12,6 @@ public class AuthController {
 
     @GetMapping("/login")
     public void login(){
-
     }
 
     @GetMapping("/fail") // 로그인 실패했을때
