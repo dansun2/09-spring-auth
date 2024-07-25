@@ -26,7 +26,6 @@ public class AuthDetails implements UserDetails {
         this.user = user;
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() { // 사용자가 로그인 되었을때 어떤 권한을 갖고있는지 확인해서 처리해줌 (SecurityConfig쪽에서)
         Collection<GrantedAuthority> authorities = new ArrayList<>(); //GrantedAuthority는 사용자의 권한을 식별하기 위한 객체
