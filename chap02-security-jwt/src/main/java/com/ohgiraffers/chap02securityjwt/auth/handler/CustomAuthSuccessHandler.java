@@ -20,6 +20,7 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
+        // getPrincipal로 인증된 객체를 가져옴
         OhUser user =  ((DetailsUser) authentication.getPrincipal()).getUser();
         JSONObject jsonValue = (JSONObject) ConvertUtil.convertObjectToJsonObject(user);
         HashMap<String, Object> responseMap = new HashMap<>();
@@ -30,7 +31,7 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
             responseMap.put("userInfo", jsonValue);
             responseMap.put("message", "탈퇴한 회원입니다.");
         }else {
-            String token = TokenUtils.generateJwtToken(user);
+            String token = TokenUtils.generateJwtToken(user); // 토큰을 만들어줌
             responseMap.put("userInfo", jsonValue);
             responseMap.put("message", "로그인 성공");
 
