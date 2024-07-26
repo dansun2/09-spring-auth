@@ -7,12 +7,12 @@ public class UserDTO {
     private String userId;
     private String userPass;
     private String userName;
-    private OhgiraffersRole role;
+    private String role;
 
     public UserDTO() {
     }
 
-    public UserDTO(String userId, String userPass, String userName, OhgiraffersRole role) {
+    public UserDTO(String userId, String userPass, String userName, String role) {
         this.userId = userId;
         this.userPass = userPass;
         this.userName = userName;
@@ -43,11 +43,11 @@ public class UserDTO {
         this.userName = userName;
     }
 
-    public OhgiraffersRole getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(OhgiraffersRole role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

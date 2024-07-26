@@ -2,8 +2,10 @@ package com.ohgiraffers.chap02securityjwt.user.service;
 
 import com.ohgiraffers.chap02securityjwt.user.model.UserDTO;
 import com.ohgiraffers.chap02securityjwt.user.model.entity.OhUser;
+import com.ohgiraffers.chap02securityjwt.user.model.entity.OhgiraffersRole;
 import com.ohgiraffers.chap02securityjwt.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -11,10 +13,12 @@ import java.util.Optional;
 @Service
 public class UserService {
     private UserRepository userRepository;
+    private BCryptPasswordEncoder encoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder encoder) {
         this.userRepository = userRepository;
+        this.encoder = encoder;
     }
 
     public UserDTO saveUser(UserDTO saveUserDTO){
@@ -22,7 +26,10 @@ public class UserService {
         OhUser ohUser = new OhUser();
         ohUser.setUserName(saveUserDTO.getUserName());
         ohUser.setUserId(saveUserDTO.getUserId());
-        ohUser.setUserPass(saveUserDTO.getUserPass());
+
+        ohUser.setUserPass(encoder.encode(saveUserDTO.getUserPass())); // 비밀번호 비교하려면 암호화를 해서 비교를 해야함(필수)
+        ohUser.setRole(OhgiraffersRole.valueOf(saveUserDTO.getRole())); // 왜 추가해야 된다고 했지?
+        ohUser.setState("Y");
 
         OhUser saveUser = userRepository.save(ohUser);
 

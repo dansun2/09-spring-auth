@@ -55,7 +55,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
                     DetailsUser authentication = new DetailsUser();
                     OhUser user = new OhUser();
-                    user.setUserId(claims.get("userId").toString());
+                    user.setUserId(claims.get("userName").toString()); // userId로 하면 안됨->이유는 tokenUtils에 userId가 없다
                     user.setRole(OhgiraffersRole.valueOf(claims.get("Role").toString()));
                     authentication.setUser(user);
 
