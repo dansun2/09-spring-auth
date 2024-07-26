@@ -1,6 +1,7 @@
 package com.ohgiraffers.chap02securityjwt.auth.config;
 
 import com.ohgiraffers.chap02securityjwt.auth.filter.HeaderFilter;
+import com.ohgiraffers.chap02securityjwt.auth.interceptor.JwtTokenInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
