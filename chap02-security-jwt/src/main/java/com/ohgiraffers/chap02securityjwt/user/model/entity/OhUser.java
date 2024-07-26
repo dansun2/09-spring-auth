@@ -97,6 +97,19 @@ public class OhUser {
         this.state = state;
     }
 
+    public OhUser() {
+    }
+
+    public OhUser(int userNo, String userId, String userPass, String userName, String userEmail, OhgiraffersRole role, String state) {
+        this.userNo = userNo;
+        this.userId = userId;
+        this.userPass = userPass;
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.role = role;
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return "OhUser{" +
