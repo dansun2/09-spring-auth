@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 // UserDetails 상속받는 이유는 DB에서 가져온 유저정보의 타입을 강제화시키기 위하여?
 public class DetailsUser implements UserDetails {

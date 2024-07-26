@@ -1,5 +1,6 @@
 package com.ohgiraffers.chap02securityjwt.auth.config;
 
+import com.ohgiraffers.chap02securityjwt.auth.handler.CustomAuthenticationProvider;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
