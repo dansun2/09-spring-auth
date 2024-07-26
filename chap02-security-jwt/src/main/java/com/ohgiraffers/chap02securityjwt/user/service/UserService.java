@@ -17,7 +17,6 @@ public class UserService {
 
     public UserDTO saveUser(UserDTO saveUserDTO){
         // 비즈니스 로직 추가
-
         OhUser ohUser = new OhUser();
         ohUser.setUserName(saveUserDTO.getUserName());
         ohUser.setUserId(saveUserDTO.getUserId());
