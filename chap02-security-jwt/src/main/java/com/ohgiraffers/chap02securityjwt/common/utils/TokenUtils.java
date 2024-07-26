@@ -5,8 +5,10 @@ import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.crypto.Data;
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -82,12 +84,18 @@ public class TokenUtils {
      * @param user - userEntity
      * @return String token
      * */
+    // 토큰에 대한 정보를 생성하기 위한 클래스. 근데 얘가 static이라 하위 메서드들도 다 static이어야 함
     public static String generateJwtToken(OhUser user){
         // 현재 시간부터 tokenValidateTime의 시간까지 유효시간
         Date expireTime = new Date(System.currentTimeMillis() + tokenValidateTime);
 
         JwtBuilder builder = Jwts.builder()
                 .setHeader(createHeader())
+                .setClaims(createClaims(user))
+                .setSubject("ohgiraffers token : " + user.getUserNo()) // 토큰의 이름을 정해줌
+                .signWith(SignatureAlgorithm.HS256, createSignature()) // 알고리즘
+                .setExpiration(expireTime);
+        return builder.compact();
     }
 
     /**
@@ -97,9 +105,25 @@ public class TokenUtils {
     private static Map<String, Object> createHeader(){
         Map<String, Object> header = new HashMap<>();
 
-        header.put("type", "jwt");
-        header.put("alg", "HS256");
-        header.put("data", System.currentTimeMillis());
-        return header;
+        header.put("type", "jwt"); // jwt 타입으로 토큰을 만들었다고 표시
+        header.put("alg", "HS256"); // 어떤 알고리즘을 썼는가
+        header.put("data", System.currentTimeMillis()); // 언제 만들었는가
+        return header; // 를 헤더에 담아줌
     }
+
+    private static Map<String, Object> createClaims(OhUser user) {
+        Map<String, Object> claims = new HashMap<>();
+
+        // jwt의 바디(중요한 데이터는 여기 넣으면 안 됨)
+        claims.put("userName", user.getUserName());
+        claims.put("Role", user.getRole());
+        claims.put("userEmail", user.getUserEmail());
+        return claims;
+    }
+
+    private static Key createSignature(){
+        byte[] secretBytes = DatatypeConverter.parseBase64Binary(jwtSecretKey);
+        return new SecretKeySpec(secretBytes, SignatureAlgorithm.HS256.getJcaName());
+    }
+
 }
