@@ -74,7 +74,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             response.setContentType("application/json");
             PrintWriter printWriter = response.getWriter();
             JSONObject jsonObject = jsonresponseWrapper(e);
-            printWriter.println(jsonObject);
+            printWriter.println(jsonObject); // 리스폰스 엔티티 안쓰고 printWriter를 씀. 필터안에서 움직이기 때문에
             printWriter.flush();
             printWriter.close();
         }

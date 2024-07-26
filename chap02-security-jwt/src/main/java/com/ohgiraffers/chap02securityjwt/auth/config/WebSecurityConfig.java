@@ -1,6 +1,7 @@
 package com.ohgiraffers.chap02securityjwt.auth.config;
 
 import com.ohgiraffers.chap02securityjwt.auth.filter.CustomAuthenticationFilter;
+import com.ohgiraffers.chap02securityjwt.auth.filter.JwtAuthorizationFilter;
 import com.ohgiraffers.chap02securityjwt.auth.handler.CustomAuthFailureHandler;
 import com.ohgiraffers.chap02securityjwt.auth.handler.CustomAuthSuccessHandler;
 import com.ohgiraffers.chap02securityjwt.auth.handler.CustomAuthenticationProvider;
