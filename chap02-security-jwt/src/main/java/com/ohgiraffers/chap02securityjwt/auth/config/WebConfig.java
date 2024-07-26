@@ -40,4 +40,5 @@ public class WebConfig implements WebMvcConfigurer {
     public JwtTokenInterceptor jwtTokenInterceptor(){
         return new JwtTokenInterceptor();
     }
+
 }
