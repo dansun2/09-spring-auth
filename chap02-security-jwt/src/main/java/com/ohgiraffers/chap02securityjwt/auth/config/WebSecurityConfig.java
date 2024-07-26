@@ -61,7 +61,7 @@ public class WebSecurityConfig {
     @Bean
     public CustomAuthenticationFilter customAuthenticationFilter(){
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager());
-        customAuthenticationFilter.setFilterProcessesUrl("/login"); // url요청 들어오면 니가 동작해
+        customAuthenticationFilter.setFilterProcessesUrl("/login"); // 이 url요청 들어오면 니가 동작해
         customAuthenticationFilter.setAuthenticationSuccessHandler(customAuthSuccessHandler()); // 검증이 성공했을때 핸들러
         customAuthenticationFilter.setAuthenticationFailureHandler(customAuthFailureHandler); // 검증이 실패했을때 핸들러
         return customAuthenticationFilter;

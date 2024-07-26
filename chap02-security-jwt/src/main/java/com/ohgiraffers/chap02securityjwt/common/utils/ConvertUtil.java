@@ -8,7 +8,7 @@ import org.json.simple.parser.ParseException;
 
 public class ConvertUtil {
 
-    private static Object convertObjectToJsonObject(Object obj){
+    public static Object convertObjectToJsonObject(Object obj){
         ObjectMapper mapper = new ObjectMapper();
         JSONParser parser = new JSONParser();
         String converJsonString;
