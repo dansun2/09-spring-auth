@@ -1,5 +1,6 @@
 package com.ohgiraffers.chap02securityjwt.auth.config;
 
+import com.ohgiraffers.chap02securityjwt.auth.filter.HeaderFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,11 +24,19 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public FilterRegistrationBean<HeaderFilter> getFilterRegistrationBean(){
-        FilterRegistrationBean<HeaderFilter> registrationBean = new FilterRegistrationBean<HeaderFilter>(createHeaderFilter);
+        FilterRegistrationBean<HeaderFilter> registrationBean = new FilterRegistrationBean<HeaderFilter>(createHeaderFilter());
+        registrationBean.setOrder(Integer.MIN_VALUE); // bean의 등록순서. 0번째로 등록하겠다
+        registrationBean.addUrlPatterns("/*"); // 모든 요청에 대해 다 처리하겠다
+        return registrationBean;
     }
 
     @Bean
     public HeaderFilter createHeaderFilter(){
         return new HeaderFilter();
+    }
+
+    @Bean
+    public JwtTokenInterceptor jwtTokenInterceptor(){
+        return new JwtTokenInterceptor();
     }
 }
