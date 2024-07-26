@@ -6,6 +6,8 @@ import com.ohgiraffers.chap02securityjwt.common.utils.TokenUtils;
 import com.ohgiraffers.chap02securityjwt.user.model.entity.OhUser;
 import com.ohgiraffers.chap02securityjwt.user.model.entity.OhgiraffersRole;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +23,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 // 요청시 기본필터
@@ -75,5 +78,22 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             printWriter.flush();
             printWriter.close();
         }
+    }
+
+    private JSONObject jsonresponseWrapper(Exception e) {
+        String resultMsg = "";
+        if (e instanceof ExpiredJwtException){
+            resultMsg = "TOKEN EXPIRED";
+        } else if (e instanceof SignatureException) {
+            resultMsg = "Token Parsing JwtException";
+        } else {
+            resultMsg = "Other Token Error";
+        }
+        HashMap<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("status", 401);
+        jsonMap.put("message", resultMsg);
+        jsonMap.put("reason", e.getMessage());
+        JSONObject jsonObject = new JSONObject(jsonMap);
+        return jsonObject;
     }
 }
